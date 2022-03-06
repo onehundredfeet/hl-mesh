@@ -1,0 +1,4 @@
+-lib hl-idl
+-lib tink_macro
+-hl bin/test.hl
+--main Test

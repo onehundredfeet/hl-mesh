@@ -1,0 +1,261 @@
+// Web IDL code goes here
+
+/*
+enum HAPI_Result {
+"HAPI_RESULT_SUCCESS",
+"HAPI_RESULT_FAILURE",	
+"HAPI_RESULT_ALREADY_INITIALIZED", 	
+"HAPI_RESULT_NOT_INITIALIZED", 	
+"HAPI_RESULT_CANT_LOADFILE", 	
+"HAPI_RESULT_PARM_SET_FAILED", 	
+"HAPI_RESULT_INVALID_ARGUMENT", 	
+"HAPI_RESULT_CANT_LOAD_GEO", 	
+"HAPI_RESULT_CANT_GENERATE_PRESET", 	
+"HAPI_RESULT_CANT_LOAD_PRESET", 	
+"HAPI_RESULT_ASSET_DEF_ALREADY_LOADED", 	
+"HAPI_RESULT_NO_LICENSE_FOUND", 	
+"HAPI_RESULT_DISALLOWED_NC_LICENSE_FOUND", 	
+"HAPI_RESULT_DISALLOWED_NC_ASSET_WITH_C_LICENSE", 	
+"HAPI_RESULT_DISALLOWED_NC_ASSET_WITH_LC_LICENSE", 	
+"HAPI_RESULT_DISALLOWED_LC_ASSET_WITH_C_LICENSE", 	
+"HAPI_RESULT_DISALLOWED_HENGINEINDIE_W_3PARTY_PLUGIN", 	
+"HAPI_RESULT_ASSET_INVALID", 	
+"HAPI_RESULT_NODE_INVALID", 	
+"HAPI_RESULT_USER_INTERRUPTED", 	
+"HAPI_RESULT_INVALID_SESSION" 
+};
+ enum HAPI_PackedPrimInstancingMode
+{
+"HAPI_PACKEDPRIM_INSTANCING_MODE_INVALID",
+"HAPI_PACKEDPRIM_INSTANCING_MODE_DISABLED",
+"HAPI_PACKEDPRIM_INSTANCING_MODE_HIERARCHY",
+"HAPI_PACKEDPRIM_INSTANCING_MODE_FLAT",
+"HAPI_PACKEDPRIM_INSTANCING_MODE_MAX"
+};
+
+enum HAPI_NodeType
+{
+    "HAPI_NODETYPE_ANY",
+    "HAPI_NODETYPE_NONE",
+    "HAPI_NODETYPE_OBJ",
+    "HAPI_NODETYPE_SOP",
+    "HAPI_NODETYPE_CHOP",
+    "HAPI_NODETYPE_ROP",
+    "HAPI_NODETYPE_SHOP",
+    "HAPI_NODETYPE_COP",
+    "HAPI_NODETYPE_VOP",
+    "HAPI_NODETYPE_DOP",
+    "HAPI_NODETYPE_TOP"
+};
+
+
+ enum HAPI_NodeFlags
+{
+	"HAPI_NODEFLAGS_ANY",
+	"HAPI_NODEFLAGS_NONE",
+	"HAPI_NODEFLAGS_DISPLAY",
+	"HAPI_NODEFLAGS_RENDER",
+	"HAPI_NODEFLAGS_TEMPLATED",
+	"HAPI_NODEFLAGS_LOCKED",
+	"HAPI_NODEFLAGS_EDITABLE",
+	"HAPI_NODEFLAGS_BYPASS",
+	"HAPI_NODEFLAGS_NETWORK",
+	"HAPI_NODEFLAGS_OBJ_GEOMETRY",
+	"HAPI_NODEFLAGS_OBJ_CAMERA",
+	"HAPI_NODEFLAGS_OBJ_LIGHT",
+	"HAPI_NODEFLAGS_OBJ_SUBNET",
+	"HAPI_NODEFLAGS_SOP_CURVE",	
+	"HAPI_NODEFLAGS_SOP_GUIDE",	
+	"HAPI_NODEFLAGS_TOP_NONSCHEDULER",	
+	"HAPI_NODEFLAGS_NON_BYPASS"
+};
+
+[Internal="HAPI_ThriftServerOptions"]
+interface ServerOptions {
+	void ServerOptions();
+
+    attribute bool autoClose;
+    attribute float timeoutMs;
+
+    [CObject, Internal="HAPI_StartThriftNamedPipeServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int startNamedPipeServer( [Const] String name,  [Return] int pid);
+    [CObject, Internal="HAPI_StartThriftSocketServer",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int startSocketServer( int port,  [Return]int pid);
+};
+	
+
+[Internal="HAPI_CookOptions"]
+interface CookOptions {
+	void CookOptions();
+	attribute bool splitGeosByGroup;
+	attribute bool splitGeosByAttribute;
+	attribute bool splitAttrSH;
+	attribute int maxVerticesPerPrimitive;
+	attribute bool  refineCurveToLinear;
+	attribute float curveRefineLOD;
+	attribute bool clearErrorsAndWarnings;
+	attribute bool cookTemplatedGeos;
+	attribute bool splitPointsByVertexAttributes;
+	attribute bool handleBoxPartTypes;
+    attribute bool handleSpherePartTypes;
+	attribute bool checkPartChanges;
+	attribute bool cacheMeshTopology;
+
+//	attribute int packedPrimInstancingMode;
+};
+
+[Internal="HAPI_AssetInfo"]
+interface AssetInfo {
+	void AssetInfo();
+	attribute int nodeId;
+	attribute int objectNodeId;
+	attribute bool hasEverCooked;
+
+	attribute int nameSH;
+	attribute int labelSH;
+	attribute int filePathSH;
+	attribute int versionSH;
+	attribute int fullOpNameSH;
+	attribute int helpTextSH;
+	attribute int helpURLSH;
+
+	attribute int objectCount;
+	attribute int handleCount;
+	attribute int transformInputCount;
+	attribute int geoInputCount;
+	attribute int geoOutputCount; 
+	attribute bool haveObjectsChanged; 
+	attribute bool haveMaterialsChanged; 
+};
+
+[Internal="HAPI_NodeInfo"]
+interface NodeInfo {
+	void NodeInfo();
+
+	attribute int id;
+    attribute int parentId;
+    attribute int nameSH;
+	
+    attribute HAPI_NodeType type;
+
+    /// Always true unless the asset's definition has changed due to loading
+    /// a duplicate asset definition and from another OTL asset library
+    /// file OR deleting the OTL asset library file used by this node's asset.
+    attribute bool isValid;
+
+    /// Total number of cooks of this node.
+    attribute int totalCookCount;
+
+    /// Use this unique id to grab the OP_Node pointer for this node.
+    /// If you're linking against the C++ HDK, include the OP_Node.h header
+    /// and call OP_Node::lookupNode().
+    attribute int uniqueHoudiniNodeId;
+
+    /// This is the internal node path in the Houdini scene graph. This path
+    /// is meant to be abstracted away for most client purposes but for
+    /// advanced uses it can come in handy.
+    attribute int internalNodePathSH;
+
+    /// Total number of parameters this asset has exposed. Includes hidden
+    /// parameters.
+    /// See @ref HAPI_Parameters.
+    attribute int parmCount;
+
+    /// Number of values. A single parameter may have more than one value so
+    /// this number is more than or equal to ::HAPI_NodeInfo::parmCount.
+    /// @{
+    attribute int parmIntValueCount;
+    attribute int parmFloatValueCount;
+    attribute int parmStringValueCount;
+    /// @}
+
+    /// The total number of choices among all the combo box parameters.
+    /// See @ref HAPI_Parameters_ChoiceLists.
+    attribute int parmChoiceCount;
+
+    /// The number of child nodes. This is 0 for all nodes that are not
+    /// node networks.
+    attribute int childNodeCount;
+
+    /// The number of inputs this specific node has.
+    attribute int inputCount;
+
+    /// The number of outputs this specific node has.
+    attribute int outputCount;
+
+    /// Nodes created via scripts or via ::HAPI_CreateNode() will be have
+    /// this set to true. Only such nodes can be deleted using
+    /// ::HAPI_DeleteNode().
+    attribute bool createdPostAssetLoad;
+
+    /// Indicates if this node will change over time
+    attribute bool isTimeDependent;
+};
+
+[Internal="HAPI_Session"]
+interface Session {
+	void Session();
+//	attribute int id;
+
+    [CObject, Internal="HAPI_CreateThriftSocketSession",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int connectBySocket( [Const] String hostname,  int port);
+    [CObject, Internal=" HAPI_Initialize",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int initialize( CookOptions cookOptions , bool cookThreads, int cookingStackSize, String environmentFiles, String otlsearch, String dsosearch, String imagedsosearch, String audiodsosearch);
+    [CObject, Internal="HAPI_CloseSession",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int close();
+    [CObject, Internal="HAPI_IsSessionValid",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int isValid();
+    [CObject, Internal="HAPI_IsInitialized",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int isInitialized();
+    [CObject, Internal="HAPI_Cleanup",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int cleanup();
+
+	// Assets
+    [CObject, Internal="HAPI_LoadAssetLibraryFromFile",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int loadAssetLibraryFromFile(String path, bool allowOverwrite, [Return] int libraryID);
+ 	[CObject, Internal="HAPI_GetAssetInfo",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int getAssetInfo(int nodeID, AssetInfo outInfo);
+
+	//HIP File
+    [CObject, Internal="HAPI_LoadHIPFile",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int loadHIP(String path, bool cook);
+	
+	// Nodes
+    [CObject, Internal="HAPI_CreateNode",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int createNode(int parent, String name, String label, bool cook, [Return] int nodeID);
+    [CObject, Internal="HAPI_CookNode",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int cookNode(int node, CookOptions options);
+    [CObject, Internal="HAPI_GetManagerNodeId",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int getManagerNode(HAPI_NodeType nodeType, [Return] int nodeID);
+    [CObject, Internal="HAPI_ComposeChildNodeList",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int composeChildNodeList(int parent_node_id, int nodeType, int flags, bool recursive, [Return] int count);
+    [CObject, Internal="Houdini::getChildNodeList"] int[] getChildNodeList(int parent_node_id, int nodeType, int flags, bool recursive );
+    [CObject, Internal="HAPI_GetNodeInfo",Validate="HAPI_RESULT_SUCCESS", Throw="Houdini::GetLastCallError(___retvalue)"] int getNodeInfo(int node, NodeInfo info);
+
+
+
+
+	// Strings
+    [CObject, Internal="Houdini::getString"] String getString(int strID);
+    [CObject, Internal="Houdini::setString"] int createString(String v);
+	[Internal="hl_cache_string_type", Static] void cacheStringType( [HString] String x);
+
+
+};
+*/
+    /*
+	void btVector3();
+	void btVector3(float x, float y, float z);
+	float length();
+	float x();
+	float y();
+	float z();
+	void setX(float x);
+	void setY(float y);
+	void setZ(float z);
+	void setValue(float x, float y, float z);
+	void normalize();
+	[Value] btVector3 rotate([Ref] btVector3 wAxis, float angle);
+	float dot([Ref] btVector3 v);
+	[Operator="*=", Ref] btVector3 op_mul(float x);
+	[Operator="+=", Ref] btVector3 op_add([Ref] btVector3 v);
+	[Operator="-=", Ref] btVector3 op_sub([Ref] btVector3 v);
+    */    /*
+interface btCollisionWorld {
+
+	btDispatcher getDispatcher();
+	void rayTest([Const, Ref] btVector3 rayFromWorld, [Const, Ref] btVector3 rayToWorld, [Ref] RayResultCallback resultCallback);
+	btOverlappingPairCache getPairCache();
+	[Ref] btDispatcherInfo getDispatchInfo();
+	void addCollisionObject(btCollisionObject collisionObject, optional short collisionFilterGroup, optional short collisionFilterMask);
+	[Const] btBroadphaseInterface getBroadphase();
+	void convexSweepTest([Const] btConvexShape castShape, [Const, Ref] btTransform from, [Const, Ref] btTransform to, [Ref] ConvexResultCallback resultCallback, float allowedCcdPenetration);
+	void contactPairTest([Const] btCollisionObject colObjA, [Const] btCollisionObject colObjB, [Ref] ContactResultCallback resultCallback);
+	void contactTest([Const] btCollisionObject colObj, [Ref] ContactResultCallback resultCallback);
+    
+};*/

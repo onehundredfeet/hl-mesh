@@ -1,0 +1,4 @@
+-lib hl-idl
+-lib tink_macro
+-hl bin/server.hl
+--main Server
