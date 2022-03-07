@@ -1,5 +1,5 @@
 genhl:
-	haxe -cp generator  -lib hl-idl --macro "hltf.Generator.generateCpp()"
+	haxe -cp generator  -lib hl-idl --macro "gltf.Generator.generateCpp()"
 	
 genjs:
-	haxe -cp generator -lib hl-idl --macro "hltf.Generator.generateJs()"
+	haxe -cp generator -lib hl-idl --macro "gltf.Generator.generateJs()"

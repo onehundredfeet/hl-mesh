@@ -1,1 +1,4 @@
 bin
+build
+build.draco
+.DS_Store

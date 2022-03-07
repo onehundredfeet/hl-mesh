@@ -1,4 +1,4 @@
-package gltfengine;
+package gltf;
 
 #if eval
 class Generator {
@@ -10,6 +10,18 @@ class Generator {
 #pragma warning(disable:4244)
 #pragma warning(disable:4316)
 #endif
+
+#define TINYGLTF_IMPLEMENTATION
+#define TINYGLTF_NO_STB_IMAGE
+#define TINYGLTF_NO_STB_IMAGE_WRITE
+#define TINYGLTF_ENABLE_DRACO
+
+//#define STB_IMAGE_IMPLEMENTATION
+//#define STB_IMAGE_WRITE_IMPLEMENTATION
+// #define TINYGLTF_NOEXCEPTION // optional. disable exception handling.
+#include \"tiny_gltf.h\"
+
+#include \"hl_string_helpers.h\"
 
 ";
 

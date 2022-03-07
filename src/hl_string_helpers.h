@@ -7,5 +7,6 @@
 
 void hl_cache_string_type( vstring *str);
 vstring * hl_utf8_to_hlstr( const char *str);
+vdynamic * hl_vstr_to_dyn( vstring *str);
 
 #endif

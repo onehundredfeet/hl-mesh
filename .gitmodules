@@ -1,3 +1,6 @@
 [submodule "ext/tinygltf"]
 	path = ext/tinygltf
 	url = https://github.com/syoyo/tinygltf.git
+[submodule "ext/draco"]
+	path = ext/draco
+	url = https://github.com/google/draco.git

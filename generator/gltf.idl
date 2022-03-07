@@ -1,5 +1,154 @@
 // Web IDL code goes here
 
+[Internal="tinygltf::Accessor"]
+interface Accessor {
+	
+
+};
+
+[Internal="tinygltf::Animation"]
+interface Animation {
+	
+
+};
+
+[Internal="tinygltf::Buffer"]
+interface Buffer {
+	
+
+};
+
+[Internal="tinygltf::BufferView"]
+interface BufferView {
+	
+
+};
+
+[Internal="tinygltf::Material"]
+interface Material {
+	
+
+};
+
+[Internal="tinygltf::Mesh"]
+interface Mesh {
+	
+
+};
+
+[Internal="tinygltf::Node"]
+interface Node {
+	
+
+};
+
+[Internal="tinygltf::Texture"]
+interface Texture {
+	
+
+};
+
+[Internal="tinygltf::Image"]
+interface Image {
+	
+
+};
+
+[Internal="tinygltf::Skin"]
+interface Skin {
+	
+
+};
+
+[Internal="tinygltf::Sampler"]
+interface Sampler {
+	
+};
+
+
+[Internal="tinygltf::Camera"]
+interface Camera {
+	
+
+};
+
+[Internal="tinygltf::Scene"]
+interface Scene {
+	
+
+};
+
+[Internal="tinygltf::Light"]
+interface Light {
+	
+
+};
+
+[Internal="tinygltf::Asset"]
+interface Asset {
+	
+
+};
+
+[Internal="tinygltf::Value"]
+interface Value {
+	
+
+};
+
+[Internal="tinygltf::ExtensionMap"]
+interface ExtensionMap {
+	
+
+};
+
+
+[Internal="tinygltf::Model"]
+interface Model {
+	void Model();
+
+	attribute int defaultScene;
+
+	/*
+  std::vector<Accessor> accessors;
+  std::vector<Animation> animations;
+  std::vector<Buffer> buffers;
+  std::vector<BufferView> bufferViews;
+  std::vector<Material> materials;
+  std::vector<Mesh> meshes;
+  std::vector<Node> nodes;
+  std::vector<Texture> textures;
+  std::vector<Image> images;
+  std::vector<Skin> skins;
+  std::vector<Sampler> samplers;
+  std::vector<Camera> cameras;
+  std::vector<Scene> scenes;
+  std::vector<Light> lights;
+
+  int defaultScene = -1;
+  std::vector<std::string> extensionsUsed;
+  std::vector<std::string> extensionsRequired;
+
+  Asset asset;
+
+  Value extras;
+  ExtensionMap extensions;
+
+  // Filled when SetStoreOriginalJSONForExtrasAndExtensions is enabled.
+  std::string extras_json_string;
+  std::string extensions_json_string;
+	*/
+};
+
+[Internal="tinygltf::TinyGLTF"]
+interface Loader {
+	void Loader();
+
+	//hl_vstr_to_dyn(hl_utf8_to_hlstr(error__cstr.c_str())) This is unacceptable - need to add support for this
+	[Validate="true", Throw="hl_vstr_to_dyn(hl_utf8_to_hlstr(error__cstr.c_str()))"] bool LoadASCIIFromFile(Model model,  [Local, STL, AddressOf] String error,  [Local, STL, AddressOf] String warning, [STL] String path);
+	[Validate="true", Throw="hl_vstr_to_dyn(hl_utf8_to_hlstr(error__cstr.c_str()))"] bool LoadBinaryFromFile(Model model,  [Local, STL, AddressOf] String error,  [Local, STL, AddressOf] String warning, [STL] String path);
+};
+
 /*
 enum HAPI_Result {
 "HAPI_RESULT_SUCCESS",
