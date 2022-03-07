@@ -282,10 +282,6 @@ inline static void _idc_copy_array( varray *dst, double *src,  int count) {
 #pragma warning(disable:4316)
 #endif
 
-#define TINYGLTF_IMPLEMENTATION
-#define TINYGLTF_NO_STB_IMAGE
-#define TINYGLTF_NO_STB_IMAGE_WRITE
-#define TINYGLTF_ENABLE_DRACO
 
 //#define STB_IMAGE_IMPLEMENTATION
 //#define STB_IMAGE_WRITE_IMPLEMENTATION
