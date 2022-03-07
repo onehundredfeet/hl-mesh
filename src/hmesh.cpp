@@ -15,7 +15,7 @@
 
 #else
 
-#define HL_NAME(x) gltf_##x
+#define HL_NAME(x) hmesh_##x
 #include <hl.h>
 
 // Need to link in helpers

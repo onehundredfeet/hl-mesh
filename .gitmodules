@@ -4,3 +4,9 @@
 [submodule "ext/draco"]
 	path = ext/draco
 	url = https://github.com/google/draco.git
+[submodule "ext/cinolib"]
+	path = ext/cinolib
+	url = https://github.com/mlivesu/cinolib.git
+[submodule "ext/OpenFBX"]
+	path = ext/OpenFBX
+	url = https://github.com/nem0/OpenFBX.git

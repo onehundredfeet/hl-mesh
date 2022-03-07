@@ -1,4 +1,4 @@
-package gltf;
+package hmesh;
 
 #if eval
 class Generator {
@@ -22,14 +22,14 @@ class Generator {
 ";
 
 
-	static var options = { idlFile : "generator/gltf.idl", nativeLib : "gltf", outputDir : "src", includeCode : INCLUDE, autoGC : true };
+	static var options = { idlFile : "generator/hmesh.idl", nativeLib : "hmesh", outputDir : "src", includeCode : INCLUDE, autoGC : true };
 
 	public static function generateCpp() {
 		webidl.Generate.generateCpp(options);
 	}
 
 	public static function getFiles() {
-		var prj = new haxe.xml.Access(Xml.parse(sys.io.File.getContent("gltf.vcxproj.filters")).firstElement());
+		var prj = new haxe.xml.Access(Xml.parse(sys.io.File.getContent("hmesh.vcxproj.filters")).firstElement());
 		var sources = [];
 		for( i in prj.elements )
 			if( i.name == "ItemGroup" )
@@ -45,7 +45,7 @@ class Generator {
 		// ammo.js params
 		var debug = false;
 		var defines = debug ? [] : ["NO_EXIT_RUNTIME=1", "NO_FILESYSTEM=1", "AGGRESSIVE_VARIABLE_ELIMINATION=1", "ELIMINATE_DUPLICATE_FUNCTIONS=1", "NO_DYNAMIC_EXECUTION=1"];
-		var params = ["-O"+(debug?0:3), "--llvm-lto", "1", "-I", "../../include/gltf/src"];
+		var params = ["-O"+(debug?0:3), "--llvm-lto", "1", "-I", "../../include/hmesh/src"];
 		for( d in defines ) {
 			params.push("-s");
 			params.push(d);

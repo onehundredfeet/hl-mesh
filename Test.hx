@@ -1,7 +1,7 @@
 package;
 
 import haxe.Exception;
-import gltf.Native;
+import mesh.Native;
 using Lambda;
 
 class Test {

@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
-project( hl-gltf )
+project( hl-mesh )
 
-SET(library_name gltf.hdll)
+SET(library_shortname hmesh)
+SET(library_name "${library_shortname}.hdll")
 
 if (NOT HE_VERSION) 
     set(HE_VERSION "19.0.531")
@@ -32,6 +33,14 @@ if (NOT GLTF_INC_DIR)
 set(GLTF_INC_DIR "ext/tinygltf")
 endif()
 
+if (NOT CINOLIB_DIR) 
+set(CINOLIB_DIR "ext/cinolib")
+endif()
+
+if (NOT CINOLIB_INC_DIR) 
+set(CINOLIB_INC_DIR "${CINOLIB_DIR}/include")
+endif()
+
 if (NOT DRACO_INC_DIR) 
 set(DRACO_INC_DIR "/usr/local/include")
 endif()
@@ -44,18 +53,25 @@ add_library(${library_name} SHARED
 #Input C++ files go here
 #${GLTF_SRC_DIR}/INPUT FILES GO HERE.cpp
 src/hl_string_helpers.cpp
-src/gltf.cpp
-src/gltf_core.cpp
+src/gltf_impl.cpp
+src/cinolib_impl.cpp
+src/hmesh.cpp
 )
 
 set_target_properties(${library_name}
 PROPERTIES
 PREFIX ""
-OUTPUT_NAME gltf
+OUTPUT_NAME ${library_shortname}
 SUFFIX .hdll
 )
 
 cmake_policy(SET CMP0015 NEW)
+
+set(CINOLIB_USES_GRAPH_CUT ON)
+set(CINOLIB_USES_BOOST ON)
+
+find_package(cinolib REQUIRED HINTS ${CINOLIB_DIR})
+#target_link_libraries(${library_name} cinolib)
 
 
 target_include_directories(${library_name}
@@ -63,6 +79,7 @@ PRIVATE
 ${GLTF_INC_DIR}
 ${HL_INCLUDE_DIR}
 ${DRACO_INC_DIR}
+${CINOLIB_INC_DIR}
 )
 
 link_directories(${library_name}
