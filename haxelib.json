@@ -1,9 +1,9 @@
 {
-	"name" : "hl-houdini",
-	"url" : "https://github.com/onehundredfeet/hl-houdini",
+	"name" : "hl-mesh",
+	"url" : "https://github.com/onehundredfeet/hl-mesh",
 	"license" : "MIT",
 	"contributors" : ["onehundredfeet"],
-	"description" : "Houdini Engine support for Haxe HL/JS.",
+	"description" : "General mesh support for Haxe/HL",
 	"version" : "1.0.0",
 	"releasenote" : "",
 	"dependencies": { "hl-idl" : "" }

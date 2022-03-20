@@ -18,7 +18,7 @@ class Generator {
 #include \"tiny_gltf.h\"
 
 #include \"hl_string_helpers.h\"
-
+#include \"hmesh_impl.h\"
 ";
 
 

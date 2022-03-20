@@ -41,6 +41,14 @@ if (NOT CINOLIB_INC_DIR)
 set(CINOLIB_INC_DIR "${CINOLIB_DIR}/include")
 endif()
 
+if (NOT OPENFBX_DIR) 
+set(OPENFBX_DIR "ext/OpenFBX")
+endif()
+
+if (NOT OPENFBX_INC_DIR) 
+set(OPENFBX_INC_DIR "${OPENFBX_DIR}/src")
+endif()
+
 if (NOT DRACO_INC_DIR) 
 set(DRACO_INC_DIR "/usr/local/include")
 endif()
@@ -49,13 +57,20 @@ if (NOT DRACO_LIB_DIR)
 set(DRACO_LIB_DIR "/usr/local/lib")
 endif()
 
+if (NOT EIGEN_INC_DIR) 
+set(EIGEN_INC_DIR "ext/cinolib/external/eigen")
+endif()
+
 add_library(${library_name} SHARED
 #Input C++ files go here
 #${GLTF_SRC_DIR}/INPUT FILES GO HERE.cpp
 src/hl_string_helpers.cpp
 src/gltf_impl.cpp
 src/cinolib_impl.cpp
+src/hmesh_impl.cpp
 src/hmesh.cpp
+${OPENFBX_DIR}/src/ofbx.cpp
+${OPENFBX_DIR}/src/miniz.c
 )
 
 set_target_properties(${library_name}
@@ -80,6 +95,8 @@ ${GLTF_INC_DIR}
 ${HL_INCLUDE_DIR}
 ${DRACO_INC_DIR}
 ${CINOLIB_INC_DIR}
+${EIGEN_INC_DIR}
+${OPENFBX_INC_DIR}
 )
 
 link_directories(${library_name}
@@ -100,7 +117,7 @@ ${LIBDRACO}
 )
 
 #set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/bin)
-add_definitions(-DTINYGLTF_USE_CPP14 -DTINYGLTF_ENABLE_DRACO -DTINYGLTF_NO_EXTERNAL_IMAGE -DTINYGLTF_NO_STB_IMAGE -DTINYGLTF_NO_STB_IMAGE_WRITE)
+add_definitions(-DTINYGLTF_USE_CPP14 -DTINYGLTF_ENABLE_DRACO -DTINYGLTF_NO_EXTERNAL_IMAGE -DTINYGLTF_NO_STB_IMAGE -DTINYGLTF_NO_STB_IMAGE_WRITE )
 
 if (UNIX)
     # Some special flags are needed for GNU GCC compiler

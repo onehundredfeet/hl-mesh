@@ -1,111 +1,112 @@
 // Web IDL code goes here
 
-[Internal="tinygltf::Accessor"]
+[Internal="tinygltf::Accessor", NoDelete]
 interface Accessor {
 	
 
 };
 
-[Internal="tinygltf::Animation"]
+[Internal="tinygltf::Animation", NoDelete]
 interface Animation {
 	
 
 };
 
-[Internal="tinygltf::Buffer"]
+[Internal="tinygltf::Buffer", NoDelete]
 interface Buffer {
 	
 
 };
 
-[Internal="tinygltf::BufferView"]
+[Internal="tinygltf::BufferView", NoDelete]
 interface BufferView {
 	
 
 };
 
-[Internal="tinygltf::Material"]
+[Internal="tinygltf::Material", NoDelete]
 interface Material {
 	
 
 };
 
-[Internal="tinygltf::Mesh"]
+[Internal="tinygltf::Mesh", NoDelete]
 interface Mesh {
 	
 
 };
 
-[Internal="tinygltf::Node"]
+[Internal="tinygltf::Node", NoDelete]
 interface Node {
 	
 
 };
 
-[Internal="tinygltf::Texture"]
+[Internal="tinygltf::Texture", NoDelete]
 interface Texture {
 	
 
 };
 
-[Internal="tinygltf::Image"]
+[Internal="tinygltf::Image", NoDelete]
 interface Image {
 	
 
 };
 
-[Internal="tinygltf::Skin"]
+[Internal="tinygltf::Skin", NoDelete]
 interface Skin {
 	
 
 };
 
-[Internal="tinygltf::Sampler"]
+[Internal="tinygltf::Sampler", NoDelete]
 interface Sampler {
 	
 };
 
 
-[Internal="tinygltf::Camera"]
+[Internal="tinygltf::Camera", NoDelete]
 interface Camera {
 	
 
 };
 
-[Internal="tinygltf::Scene"]
+[Internal="tinygltf::Scene", NoDelete]
 interface Scene {
 	
 
 };
 
-[Internal="tinygltf::Light"]
+[Internal="tinygltf::Light", NoDelete]
 interface Light {
 	
 
 };
 
-[Internal="tinygltf::Asset"]
+[Internal="tinygltf::Asset", NoDelete]
 interface Asset {
 	
 
 };
 
-[Internal="tinygltf::Value"]
+[Internal="tinygltf::Value", NoDelete]
 interface Value {
 	
 
 };
 
-[Internal="tinygltf::ExtensionMap"]
+[Internal="tinygltf::ExtensionMap", NoDelete]
 interface ExtensionMap {
 	
 
 };
 
 
+
 [Internal="tinygltf::Model"]
-interface Model {
-	void Model();
+interface GLTFModel {
+	void GLTFModel();
 
 	attribute int defaultScene;
 
@@ -141,12 +142,30 @@ interface Model {
 };
 
 [Internal="tinygltf::TinyGLTF"]
-interface Loader {
-	void Loader();
+interface GLTFLoader {
+	void GLTFLoader();
 
 	//hl_vstr_to_dyn(hl_utf8_to_hlstr(error__cstr.c_str())) This is unacceptable - need to add support for this
-	[Validate="true", Throw="hl_vstr_to_dyn(hl_utf8_to_hlstr(error__cstr.c_str()))"] bool LoadASCIIFromFile(Model model,  [Local, STL, AddressOf] String error,  [Local, STL, AddressOf] String warning, [STL] String path);
-	[Validate="true", Throw="hl_vstr_to_dyn(hl_utf8_to_hlstr(error__cstr.c_str()))"] bool LoadBinaryFromFile(Model model,  [Local, STL, AddressOf] String error,  [Local, STL, AddressOf] String warning, [STL] String path);
+	[Validate="true", Throw="hl_vstr_to_dyn(hl_utf8_to_hlstr(error__cstr.c_str()))"] bool LoadASCIIFromFile(GLTFModel model,  [Local, STL, AddressOf] String error,  [Local, STL, AddressOf] String warning, [STL] String path);
+	[Validate="true", Throw="hl_vstr_to_dyn(hl_utf8_to_hlstr(error__cstr.c_str()))"] bool LoadBinaryFromFile(GLTFModel model,  [Local, STL, AddressOf] String error,  [Local, STL, AddressOf] String warning, [STL] String path);
+};
+
+
+[Internal="hmesh::EditableMesh"]
+interface EditablePolymesh {
+    void EditablePolymesh();
+
+    [Internal="Load"]
+    void load(String path);
+
+    [Internal="NewIterator"]
+    EditablePolymeshIt iterate();
+};
+
+[Internal="hmesh::EditableMesh::Iterator"]
+interface EditablePolymeshIt {
+   
+   
 };
 
 /*

@@ -289,6 +289,7 @@ inline static void _idc_copy_array( varray *dst, double *src,  int count) {
 #include "tiny_gltf.h"
 
 #include "hl_string_helpers.h"
+#include "hmesh_impl.h"
 
 
 
@@ -296,137 +297,78 @@ inline static void _idc_copy_array( varray *dst, double *src,  int count) {
 
 extern "C" {
 
-static void finalize_Accessor( _ref(tinygltf::Accessor)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Accessor_delete)( _ref(tinygltf::Accessor)* _this ) {
+static void finalize_GLTFModel( _ref(tinygltf::Model)* _this ) { free_ref(_this ); }
+HL_PRIM void HL_NAME(GLTFModel_delete)( _ref(tinygltf::Model)* _this ) {
 	free_ref(_this );
 }
-DEFINE_PRIM(_VOID, Accessor_delete, _IDL);
-static void finalize_Animation( _ref(tinygltf::Animation)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Animation_delete)( _ref(tinygltf::Animation)* _this ) {
+DEFINE_PRIM(_VOID, GLTFModel_delete, _IDL);
+static void finalize_GLTFLoader( _ref(tinygltf::TinyGLTF)* _this ) { free_ref(_this ); }
+HL_PRIM void HL_NAME(GLTFLoader_delete)( _ref(tinygltf::TinyGLTF)* _this ) {
 	free_ref(_this );
 }
-DEFINE_PRIM(_VOID, Animation_delete, _IDL);
-static void finalize_Buffer( _ref(tinygltf::Buffer)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Buffer_delete)( _ref(tinygltf::Buffer)* _this ) {
+DEFINE_PRIM(_VOID, GLTFLoader_delete, _IDL);
+static void finalize_EditablePolymesh( _ref(hmesh::EditableMesh)* _this ) { free_ref(_this ); }
+HL_PRIM void HL_NAME(EditablePolymesh_delete)( _ref(hmesh::EditableMesh)* _this ) {
 	free_ref(_this );
 }
-DEFINE_PRIM(_VOID, Buffer_delete, _IDL);
-static void finalize_BufferView( _ref(tinygltf::BufferView)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(BufferView_delete)( _ref(tinygltf::BufferView)* _this ) {
+DEFINE_PRIM(_VOID, EditablePolymesh_delete, _IDL);
+static void finalize_EditablePolymeshIt( _ref(hmesh::EditableMesh::Iterator)* _this ) { free_ref(_this ); }
+HL_PRIM void HL_NAME(EditablePolymeshIt_delete)( _ref(hmesh::EditableMesh::Iterator)* _this ) {
 	free_ref(_this );
 }
-DEFINE_PRIM(_VOID, BufferView_delete, _IDL);
-static void finalize_Material( _ref(tinygltf::Material)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Material_delete)( _ref(tinygltf::Material)* _this ) {
-	free_ref(_this );
+DEFINE_PRIM(_VOID, EditablePolymeshIt_delete, _IDL);
+HL_PRIM _ref(tinygltf::Model)* HL_NAME(GLTFModel_new0)() {
+	return alloc_ref((new tinygltf::Model()),GLTFModel);
 }
-DEFINE_PRIM(_VOID, Material_delete, _IDL);
-static void finalize_Mesh( _ref(tinygltf::Mesh)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Mesh_delete)( _ref(tinygltf::Mesh)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Mesh_delete, _IDL);
-static void finalize_Node( _ref(tinygltf::Node)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Node_delete)( _ref(tinygltf::Node)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Node_delete, _IDL);
-static void finalize_Texture( _ref(tinygltf::Texture)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Texture_delete)( _ref(tinygltf::Texture)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Texture_delete, _IDL);
-static void finalize_Image( _ref(tinygltf::Image)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Image_delete)( _ref(tinygltf::Image)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Image_delete, _IDL);
-static void finalize_Skin( _ref(tinygltf::Skin)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Skin_delete)( _ref(tinygltf::Skin)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Skin_delete, _IDL);
-static void finalize_Sampler( _ref(tinygltf::Sampler)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Sampler_delete)( _ref(tinygltf::Sampler)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Sampler_delete, _IDL);
-static void finalize_Camera( _ref(tinygltf::Camera)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Camera_delete)( _ref(tinygltf::Camera)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Camera_delete, _IDL);
-static void finalize_Scene( _ref(tinygltf::Scene)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Scene_delete)( _ref(tinygltf::Scene)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Scene_delete, _IDL);
-static void finalize_Light( _ref(tinygltf::Light)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Light_delete)( _ref(tinygltf::Light)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Light_delete, _IDL);
-static void finalize_Asset( _ref(tinygltf::Asset)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Asset_delete)( _ref(tinygltf::Asset)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Asset_delete, _IDL);
-static void finalize_Value( _ref(tinygltf::Value)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Value_delete)( _ref(tinygltf::Value)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Value_delete, _IDL);
-static void finalize_ExtensionMap( _ref(tinygltf::ExtensionMap)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(ExtensionMap_delete)( _ref(tinygltf::ExtensionMap)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, ExtensionMap_delete, _IDL);
-static void finalize_Model( _ref(tinygltf::Model)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Model_delete)( _ref(tinygltf::Model)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Model_delete, _IDL);
-static void finalize_Loader( _ref(tinygltf::TinyGLTF)* _this ) { free_ref(_this ); }
-HL_PRIM void HL_NAME(Loader_delete)( _ref(tinygltf::TinyGLTF)* _this ) {
-	free_ref(_this );
-}
-DEFINE_PRIM(_VOID, Loader_delete, _IDL);
-HL_PRIM _ref(tinygltf::Model)* HL_NAME(Model_new0)() {
-	return alloc_ref((new tinygltf::Model()),Model);
-}
-DEFINE_PRIM(_IDL, Model_new0,);
+DEFINE_PRIM(_IDL, GLTFModel_new0,);
 
-HL_PRIM int HL_NAME(Model_get_defaultScene)( _ref(tinygltf::Model)* _this ) {
+HL_PRIM int HL_NAME(GLTFModel_get_defaultScene)( _ref(tinygltf::Model)* _this ) {
 	return _unref(_this)->defaultScene;
 }
-DEFINE_PRIM(_I32,Model_get_defaultScene,_IDL);
-HL_PRIM int HL_NAME(Model_set_defaultScene)( _ref(tinygltf::Model)* _this, int value ) {
+DEFINE_PRIM(_I32,GLTFModel_get_defaultScene,_IDL);
+HL_PRIM int HL_NAME(GLTFModel_set_defaultScene)( _ref(tinygltf::Model)* _this, int value ) {
 	_unref(_this)->defaultScene = (value);
 	return value;
 }
-DEFINE_PRIM(_I32,Model_set_defaultScene,_IDL _I32);
+DEFINE_PRIM(_I32,GLTFModel_set_defaultScene,_IDL _I32);
 
-HL_PRIM _ref(tinygltf::TinyGLTF)* HL_NAME(Loader_new0)() {
-	return alloc_ref((new tinygltf::TinyGLTF()),Loader);
+HL_PRIM _ref(tinygltf::TinyGLTF)* HL_NAME(GLTFLoader_new0)() {
+	return alloc_ref((new tinygltf::TinyGLTF()),GLTFLoader);
 }
-DEFINE_PRIM(_IDL, Loader_new0,);
+DEFINE_PRIM(_IDL, GLTFLoader_new0,);
 
-HL_PRIM bool HL_NAME(Loader_LoadASCIIFromFile4)(_ref(tinygltf::TinyGLTF)* _this, _ref(tinygltf::Model)* model, vstring * path) {
+HL_PRIM bool HL_NAME(GLTFLoader_LoadASCIIFromFile4)(_ref(tinygltf::TinyGLTF)* _this, _ref(tinygltf::Model)* model, vstring * path) {
 	std::string error__cstr;
 std::string warning__cstr;
 std::string path__cstr = (path == nullptr) ? "" : hl_to_utf8( path->bytes ); // Should be garbage collected
 	auto ___retvalue = (_unref(_this)->LoadASCIIFromFile(_unref(model), &error__cstr, &warning__cstr, path__cstr));
 if (___retvalue != true) hl_throw(hl_vstr_to_dyn(hl_utf8_to_hlstr(error__cstr.c_str())));	return ___retvalue;
 }
-DEFINE_PRIM(_BOOL, Loader_LoadASCIIFromFile4, _IDL _IDL _STRING);
+DEFINE_PRIM(_BOOL, GLTFLoader_LoadASCIIFromFile4, _IDL _IDL _STRING);
 
-HL_PRIM bool HL_NAME(Loader_LoadBinaryFromFile4)(_ref(tinygltf::TinyGLTF)* _this, _ref(tinygltf::Model)* model, vstring * path) {
+HL_PRIM bool HL_NAME(GLTFLoader_LoadBinaryFromFile4)(_ref(tinygltf::TinyGLTF)* _this, _ref(tinygltf::Model)* model, vstring * path) {
 	std::string error__cstr;
 std::string warning__cstr;
 std::string path__cstr = (path == nullptr) ? "" : hl_to_utf8( path->bytes ); // Should be garbage collected
 	auto ___retvalue = (_unref(_this)->LoadBinaryFromFile(_unref(model), &error__cstr, &warning__cstr, path__cstr));
 if (___retvalue != true) hl_throw(hl_vstr_to_dyn(hl_utf8_to_hlstr(error__cstr.c_str())));	return ___retvalue;
 }
-DEFINE_PRIM(_BOOL, Loader_LoadBinaryFromFile4, _IDL _IDL _STRING);
+DEFINE_PRIM(_BOOL, GLTFLoader_LoadBinaryFromFile4, _IDL _IDL _STRING);
+
+HL_PRIM _ref(hmesh::EditableMesh)* HL_NAME(EditablePolymesh_new0)() {
+	return alloc_ref((new hmesh::EditableMesh()),EditablePolymesh);
+}
+DEFINE_PRIM(_IDL, EditablePolymesh_new0,);
+
+HL_PRIM void HL_NAME(EditablePolymesh_load1)(_ref(hmesh::EditableMesh)* _this, vstring * path) {
+	const char* path__cstr = (path == nullptr) ? "" : hl_to_utf8( path->bytes ); // Should be garbage collected
+	(_unref(_this)->Load(path__cstr));
+}
+DEFINE_PRIM(_VOID, EditablePolymesh_load1, _IDL _STRING);
+
+HL_PRIM _ref(hmesh::EditableMesh::Iterator)* HL_NAME(EditablePolymesh_iterate0)(_ref(hmesh::EditableMesh)* _this) {
+	return alloc_ref((_unref(_this)->NewIterator()),EditablePolymeshIt);
+}
+DEFINE_PRIM(_IDL, EditablePolymesh_iterate0, _IDL);
 
 }
